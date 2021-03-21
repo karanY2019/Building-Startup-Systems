@@ -1,4 +1,18 @@
-const AWS = require("aws-sdk");
+'use strict';
+
+module.exports.hello = async (event) => {
+  if (event.path === '/whoami' && event.httpMethod === 'GET') {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({username: 'ky393'})
+    }
+  }  
+}
+
+
+
+
+/*const AWS = require("aws-sdk");
 const express = require("express");
 const serverless = require("serverless-http");
 
@@ -66,3 +80,4 @@ app.use((req, res, next) => {
 
 
 module.exports.handler = serverless(app);
+*/

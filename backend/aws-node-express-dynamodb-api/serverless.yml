@@ -10,32 +10,31 @@ provider:
   runtime: nodejs12.x
   lambdaHashingVersion: '20201221'
   stage: dev
-  iam:
-    role:
-      statements:
-        - Effect: Allow
-          Action:
-            - dynamodb:Query
-            - dynamodb:Scan
-            - dynamodb:GetItem
-            - dynamodb:PutItem
-            - dynamodb:UpdateItem
-            - dynamodb:DeleteItem
-          Resource:
-            - Fn::GetAtt: [ UsersTable, Arn ]
-  environment:
-    USERS_TABLE: ${self:custom.tableName}
+ # iam:
+ #   role:
+ #     statements:
+ #       - Effect: Allow
+ #         Action:
+ #           - dynamodb:Query
+ #           - dynamodb:Scan
+ #           - dynamodb:GetItem
+ #           - dynamodb:PutItem
+ #           - dynamodb:UpdateItem
+ #           - dynamodb:DeleteItem
+ #         Resource:
+ #           - Fn::GetAtt: [ UsersTable, Arn ]
+ # environment:
+  #  USERS_TABLE: ${self:custom.tableName}
 
 functions:
-  api:
-    handler: handler.handler
+  hello:
+    handler: handler.hello
     events:
       - http:
-          path: /
-          method: ANY
-      - http:
-          path: /{proxy+}
-          method: ANY
+          path: /whoami
+          method: get
+
+
 
 resources:
   Resources:
