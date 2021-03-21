@@ -1,9 +1,59 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import {Button, Alert, Breadcrumb, Card, Container, Form, Row, Col} from 'react-bootstrap'
+import 'bootstrap/dist/css/bootstrap.min.css'
 //import './app.sass';
 
-class App extends Component {
+function App() {
+  return (
+    <div className="App">
+      <header className="App=Header">
+        <Container>
+        <Form>
+            <Row>
+              <Col>
+              <Form.Group controlId="formEmail">
+                <Form.Label>Email Address</Form.Label>
+                <Form.Control type="email" placeholder="xxx@email.com"/>
+              </Form.Group>
+              </Col>
+              <Col>
+                <Form.Group controlId="formEmail">
+                  <Form.Label>Password</Form.Label>
+                  <Form.Control type="password" placeholder="Password"/>
+                </Form.Group>
+              </Col>
+            </Row>
+        <Button variant='info'>Sign in</Button>
+        </Form>
+        
+        <Card className="mb-3" style={{color: "#000", width: '60rem'}}>
+          <Card.Img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK4aQGQczM3a39lujDohb4FjYXLKTexZU1MQ&usqp=CAU/160/50"/>
+          <Card.Body>
+            <Card.Title>
+              CoShop
+            </Card.Title>
+            <Card.Text>
+            Collaborative Shopping
+            </Card.Text>
+          </Card.Body>
+        </Card>
+        <Breadcrumb>
+          <Breadcrumb.Item>Stores</Breadcrumb.Item>
+          <Breadcrumb.Item>Location</Breadcrumb.Item>
+          <Breadcrumb.Item active>Test</Breadcrumb.Item>
+        </Breadcrumb>
+
+        
+
+
+        </Container>
+      </header>
+    </div>
+  );
+}
+/*class App extends Component {
   render() {
     return (
       <div className="App">
@@ -39,6 +89,6 @@ class App extends Component {
       </div>
     );
   }
-}
+} */
 
 export default App;
