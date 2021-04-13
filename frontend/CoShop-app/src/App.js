@@ -3,9 +3,26 @@ import logo from './logo.svg';
 import './App.css';
 import {Button, Alert, Breadcrumb, Card, Container, Form, Row, Col} from 'react-bootstrap'
 import 'bootstrap/dist/css/bootstrap.min.css'
-//import './app.sass';
+import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
+import firebase from 'firebase';
+
+import Navigation from './Component/Navigation';
+import { Router } from 'react-router-dom';
+import history from './Services/history';
+
 
 function App() {
+  return (
+  <Router history={history}>
+  <Navigation />
+  </Router>
+  );
+  }
+
+export default App;
+
+
+/*function App2() {
   return (
     <div className="App">
       <header className="App=Header">
@@ -52,7 +69,8 @@ function App() {
       </header>
     </div>
   );
-}
+}*/
+
 /*class App extends Component {
   render() {
     return (
@@ -91,4 +109,3 @@ function App() {
   }
 } */
 
-export default App;
