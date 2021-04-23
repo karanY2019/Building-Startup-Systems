@@ -1,7 +1,7 @@
 'use strict';
-//const headers = { 'Access-Control-Allow-Origin': '*' }
-//const firebaseTokenVerifier = require('firebase-token-verifier')
-//const projectId = 'coshop-cs5356' 
+const headers = { 'Access-Control-Allow-Origin': '*' }
+const firebaseTokenVerifier = require('firebase-token-verifier')
+const projectId = 'coshop-cs5356' 
 
 module.exports.hello = async (event) => {
   if (event.path === '/whoami' && event.httpMethod === "GET" ){
