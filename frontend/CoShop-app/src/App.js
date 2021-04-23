@@ -11,101 +11,173 @@ import { Router } from 'react-router-dom';
 import history from './Services/history';
 
 
-function App() {
-  return (
-  <Router history={history}>
-  <Navigation />
-  </Router>
-  );
+var firebaseConfig = {
+  apiKey: "AIzaSyANXg6kpBF53hSn-2smRbxdXT-JXztdN6s",
+  authDomain: "coshop-cs5356.firebaseapp.com",
+  projectId: "coshop-cs5356",
+  storageBucket: "coshop-cs5356.appspot.com",
+  messagingSenderId: "852483800520",
+  appId: "1:852483800520:web:5aaed6423d886d21e814fd",
+  measurementId: "G-8DPCYD26VD"
+};
+
+firebase.initializeApp(firebaseConfig);
+
+class Collabrators extends React.Component {
+  state = {
+    orders: null
   }
 
-export default App;
+  async componentDidMount() {
+    
+    const idToken = await firebase.auth().currentuser?.getIdToken()  
+    //this.setState({data: idToken})
+    const response = await fetch('http://localhost:4000/dev/collabrators', {
+      headers: {
+        'Authorization': idToken
+      }
+    })
+    if (response.status === 401) {
+      return console.log('unauthorized')
+    }
+    const collabrators = await response.json()
+    // save it to your components state so you can use it during render
+    this.setState({collabrators: collabrators})
+    console.log(collabrators)
+  }
+  render() {
+    return ( 
+    
+    <div>
 
+    {console.log("PLEASE", this.state.collabrators)}
+    <div className="title">My Collabrators </div>  
 
-/*function App2() {
-  return (
-    <div className="App">
-      <header className="App=Header">
-        <Container>
-        <Form>
-            <Row>
-              <Col>
-              <Form.Group controlId="formEmail">
-                <Form.Label>Email Address</Form.Label>
-                <Form.Control type="email" placeholder="xxx@email.com"/>
-              </Form.Group>
-              </Col>
-              <Col>
-                <Form.Group controlId="formEmail">
-                  <Form.Label>Password</Form.Label>
-                  <Form.Control type="password" placeholder="Password"/>
-                </Form.Group>
-              </Col>
-            </Row>
-        <Button variant='info'>Sign in</Button>
-        </Form>
-        
-        <Card className="mb-3" style={{color: "#000", width: '60rem'}}>
+      <ul>      
+      {        
+        this.state.collabrators && this.state.collabrators.map((collabrators,index) =>  {
+          
+          return (
+            <li key={index}>
+              <div>
+                <p class = "title is-4">collabrators Name: {collabrators.name}</p>
+                <p class = "subtitle is-6">collabrators location: {collabrators.loc}</p>
+              </div>
+            </li>
+          )
+        })       
+      }      
+    </ul>
+  </div>
+    )  
+  }    
+}
+ 
+
+class SignInScreen extends React.Component {
+ 
+  // The component's Local state.
+  state = {
+    isSignedIn: false // Local signed-in state.
+  };
+  
+  // Configure FirebaseUI.
+  uiConfig = {
+    // Popup signin flow rather than redirect flow.
+    signInFlow: 'popup',
+    // We will display Google and Facebook as auth providers.
+    signInOptions: [
+      firebase.auth.EmailAuthProvider.PROVIDER_ID
+    ],
+    callbacks: {
+      // Avoid redirects after sign-in.
+      signInSuccessWithAuthResult: () => false
+    }
+  };
+
+  // Listen to the Firebase Auth state and set the local state.
+  componentDidMount() {
+    
+    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
+       (user) => this.setState({isSignedIn: !!user})
+    );
+   
+  }
+
+  // Make sure we un-register Firebase observers when the component unmounts.
+  componentWillUnmount() {
+    this.unregisterAuthObserver();
+  }
+
+  render() {
+    if (!this.state.isSignedIn) {
+      return (
+        <div>
+          <h1>CoShop</h1>
+          <p>Please sign-in:</p>
+          <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
+        </div>
+      );
+    }
+    return (
+      <div>
+        <h1>CoShop</h1>
+        <div class="align-login-item-centre">
+        <Card className="mb-3" style={{color: "#000", width: '30rem'}}>
           <Card.Img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK4aQGQczM3a39lujDohb4FjYXLKTexZU1MQ&usqp=CAU/160/50"/>
           <Card.Body>
-            <Card.Title>
+            {/* <Card.Title> 
               CoShop
-            </Card.Title>
+            </Card.Title>*/}
             <Card.Text>
             Collaborative Shopping
             </Card.Text>
           </Card.Body>
         </Card>
+
         <Breadcrumb>
+          <Breadcrumb.Item>About</Breadcrumb.Item>
           <Breadcrumb.Item>Stores</Breadcrumb.Item>
           <Breadcrumb.Item>Location</Breadcrumb.Item>
           <Breadcrumb.Item active>Test</Breadcrumb.Item>
         </Breadcrumb>
+        <Container>
+        <p>Welcome ! You are now signed-in!</p>
 
-        
+        {/* <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p> */}
+        {/* <p> E-mail: {firebase.auth().currentUser.email}   </p> */}
 
-
+        {/* <a onClick={() => firebase.auth().signOut()}>Sign-out</a> */}
+        <Collabrators />
+        <Button variant="primary" block onClick={() => firebase.auth().signOut()}>Sign-out</Button> 
         </Container>
-      </header>
-    </div>
-  );
-}*/
+     </div>
+  
 
-/*class App extends Component {
-  render() {
-    return (
-      <div className="App">
-        <h1 className="title">CoShop</h1>
-
-        <p className="subtitle">
-          Collaborative Shopping{' '}
-          <a href="https://developer.mozilla.org/en-US/docs/Web/CSS/CSS_Flexible_Box_Layout/Basic_Concepts_of_Flexbox">
-            Flexbox
-          </a>
-        </p>
-
-        <div className="field">
-          <div className="control">
-            <input className="input" type="text" placeholder="Input" />
-          </div>
-        </div>
-
-        <div className="field">
-          <p className="control">
-            <span className="select">
-              <select>
-                <option>Select dropdown</option>
-              </select>
-            </span>
-          </p>
-        </div>
-
-        <div className="buttons">
-          <a className="button is-primary">Signin</a>
-          <a className="button is-link"></a>
-        </div>
       </div>
     );
   }
-} */
+}
+
+function App() {
+  return (
+    <div className="App">
+      <header className="App-header">
+        {/* <img src={logo} className="App-logo" alt="logo" /> */}
+        <SignInScreen />
+      </header>
+    </div>
+  );
+}
+
+export default App;
+
+/*function App() {
+  return (
+  <Router history={history}>
+  <Navigation />
+  </Router>
+  );
+  }*/
+
 

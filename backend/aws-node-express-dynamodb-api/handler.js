@@ -1,18 +1,167 @@
 'use strict';
+//const headers = { 'Access-Control-Allow-Origin': '*' }
+//const firebaseTokenVerifier = require('firebase-token-verifier')
+//const projectId = 'coshop-cs5356' 
 
 module.exports.hello = async (event) => {
+  if (event.path === '/whoami' && event.httpMethod === "GET" ){
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        username: 'cl2634'
+      })
+    }
+  }
+  if (event.path === '/feed' && event.httpMethod === "GET" ){
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        [{username: 'da335', message: 'building stuff is cool'}]
+      )
+    }
+  }
+  return {
+    statusCode: 200,
+    body: JSON.stringify(
+      {
+        message: 'Go Serverless v1.0! Your function executed successfully!',
+        input: event,
+      },
+      null,
+      2
+    ),
+  };
+
+  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
+  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+};
+
+module.exports.feed = async (event) => {
+
+  if (event.path === '/feed' && event.httpMethod === "GET" ){
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        [{username: 'cl2634', message: 'building stuff is cool'}]
+      )
+    }
+  }
+
+};
+
+module.exports.collabrators = async (event) => {
+
+  if (event.path === '/collabrators' && event.httpMethod === "GET" ){
+    
+    const token = event.headers['Authorization']
+    // If no token is provided, or it is "", return a 401
+    if (!token) {
+      return {
+        statusCode: 401
+      }
+    }
+
+    try {
+      // validate the token from the request
+      const decoded = await firebaseTokenVerifier.validate(token, projectId)
+    } catch (err) {
+      // the token was invalid,
+      console.error('wrong token', err)
+      return {
+        statusCode: 401
+      }
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        [{name: 'Dan', loc: 'NYC', total: '$50',menuItems: [{ name: 'fried chicken', quantity: 2 }]},
+        {name: 'Amy', loc: 'Boston', total: '$10',menuItems: [{ name: 'veg', quantity: 1 }]}]
+      )
+    }
+  }
+
+};
+/*module.exports.hello = async (event) => {
+  if (event.httpMethod === 'OPTIONS') {
+    return {
+      statusCode: 204,
+      headers
+    }
+  }
+
+  if (event.path === '/feed' && event.httpMethod === 'GET') {
+      const token = event.headers['Authorization']
+      if (!token) {
+       return {
+            statusCode: 401
+               }
+             }
+      try {
+        const decoded = await firebaseTokenVerifier.validate(token, projectId)
+        // user is now confirmed to be authorized
+        return {
+          statusCode: 200,
+          body: JSON.stringify([{
+            name: 'da335',
+            message: 'arent APIs great?',
+             likes: 0
+          }])
+         }
+       } catch (err) {
+          console.error(err)
+          return {
+            statusCode: 401
+          }
+        }
+        return {
+          statusCode: 405,
+        };
+  };
+}
+  /*if (event.path === '/orders' && event.httpMethod === 'GET') {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        id: 'order-id',
+        status: 'in-progress',
+        total: '$50',
+        menuItems: [{ name: 'fried chicken', quantity: 2 }]
+      },)
+    }
+  }*/
+  
+  /*if (event.path === '/invite' && event.httpMethod === 'GET') {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({
+        name: 'Amy',
+        relation: 'Friend',
+        id: "22JP9H",
+        location: "NYC"
+        },)
+    }
+  }
+
   if (event.path === '/whoami' && event.httpMethod === 'GET') {
     return {
       statusCode: 200,
       body: JSON.stringify({username: 'ky393'})
     }
+  } */   
+
+
+
+/*
+
+if (event.path === '/whoami' && event.httpMethod === 'GET') {
+    return {
+      statusCode: 200,
+      body: JSON.stringify({username: 'ky393'})
+    }
   }  
-}
 
-
-
-
-/*const AWS = require("aws-sdk");
+const AWS = require("aws-sdk");
 const express = require("express");
 const serverless = require("serverless-http");
 

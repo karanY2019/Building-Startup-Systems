@@ -31,8 +31,25 @@ functions:
     handler: handler.hello
     events:
       - http:
-          path: /whoami
-          method: get
+          path: /
+          method: ANY
+      - http:
+          path: /{proxy+}
+          method: ANY
+
+  feedApi:
+    handler: handler.feed
+    events:
+      - http:
+          path: /feed
+          method: GET
+          
+  collabratorsApi:
+    handler: handler.collabrators
+    events:
+      - http:
+          path: /collabrators
+          method: GET
 
 
 
@@ -51,3 +68,9 @@ resources:
           ReadCapacityUnits: 1
           WriteCapacityUnits: 1
         TableName: ${self:custom.tableName}
+plugins:
+  - serverless-offline
+
+#- http:
+          #path: /whoami
+          #method: get  

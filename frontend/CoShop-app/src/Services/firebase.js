@@ -1,6 +1,6 @@
-import firebase from 'firebase';
+//import firebase from 'firebase';
 
-const firebaseConfig = {
+/*const firebaseConfig = {
     apiKey: "AIzaSyANXg6kpBF53hSn-2smRbxdXT-JXztdN6s",
     authDomain: "coshop-cs5356.firebaseapp.com",
     projectId: "coshop-cs5356",
@@ -11,5 +11,5 @@ const firebaseConfig = {
   };
 
 firebase.initializeApp(firebaseConfig);
-export default firebase;
+export default firebase; */
 

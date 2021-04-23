@@ -4,6 +4,10 @@
   "description": "",
   "dependencies": {
     "express": "^4.17.1",
+    "firebase-token-verifier": "^0.1.0",
     "serverless-http": "^2.7.0"
+  },
+  "devDependencies": {
+    "serverless-offline": "^6.9.0"
   }
 }

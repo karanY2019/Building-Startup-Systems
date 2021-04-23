@@ -4,3 +4,4 @@ description: Deploys a Node Express API service backed by DynamoDB with traditio
 keywords: aws, serverless, faas, lambda, node, express, dynamodb
 repo: https://github.com/serverless/examples/aws-node-express-dynamodb-api
 license: MIT
+
