@@ -3,12 +3,46 @@ const headers = { 'Access-Control-Allow-Origin': '*' }
 const firebaseTokenVerifier = require('firebase-token-verifier')
 const projectId = 'coshop-cs5356' 
 
+module.exports.collabrators = async (event) => {
+
+  if (event.path === '/collabrators' && event.httpMethod === "GET" ){
+    
+    const token = event.headers['Authorization']
+    // If no token is provided, or it is "", return a 401
+    if (!token) {
+      return {
+        statusCode: 401
+      }
+    }
+
+    try {
+      // validate the token from the request
+      const decoded = await firebaseTokenVerifier.validate(token, projectId)
+    } catch (err) {
+      // the token was invalid,
+      console.error('wrong token', err)
+      return {
+        statusCode: 401
+      }
+    }
+
+    return {
+      statusCode: 200,
+      body: JSON.stringify(
+        [{name: 'Dan', loc: 'NYC', total: '$50',menuItems: [{ name: 'fried chicken', quantity: 2 }]},
+        {name: 'Amy', loc: 'Boston', total: '$10',menuItems: [{ name: 'veg', quantity: 1 }]}]
+      )
+    }
+  }
+
+};
+
 module.exports.hello = async (event) => {
   if (event.path === '/whoami' && event.httpMethod === "GET" ){
     return {
       statusCode: 200,
       body: JSON.stringify({
-        username: 'cl2634'
+        username: 'ky393'
       })
     }
   }
@@ -49,39 +83,7 @@ module.exports.feed = async (event) => {
 
 };
 
-module.exports.collabrators = async (event) => {
 
-  if (event.path === '/collabrators' && event.httpMethod === "GET" ){
-    
-    const token = event.headers['Authorization']
-    // If no token is provided, or it is "", return a 401
-    if (!token) {
-      return {
-        statusCode: 401
-      }
-    }
-
-    try {
-      // validate the token from the request
-      const decoded = await firebaseTokenVerifier.validate(token, projectId)
-    } catch (err) {
-      // the token was invalid,
-      console.error('wrong token', err)
-      return {
-        statusCode: 401
-      }
-    }
-
-    return {
-      statusCode: 200,
-      body: JSON.stringify(
-        [{name: 'Dan', loc: 'NYC', total: '$50',menuItems: [{ name: 'fried chicken', quantity: 2 }]},
-        {name: 'Amy', loc: 'Boston', total: '$10',menuItems: [{ name: 'veg', quantity: 1 }]}]
-      )
-    }
-  }
-
-};
 /*module.exports.hello = async (event) => {
   if (event.httpMethod === 'OPTIONS') {
     return {
