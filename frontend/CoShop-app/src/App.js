@@ -30,7 +30,7 @@ class Collabrators extends React.Component {
 
   async componentDidMount() {
     
-    const idToken = await firebase.auth().currentuser?.getIdToken()  
+    const idToken = await firebase.auth().currentUser?.getIdToken()  
     //this.setState({data: idToken})
     const response = await fetch('http://localhost:4000/dev/collabrators', {
       headers: {
