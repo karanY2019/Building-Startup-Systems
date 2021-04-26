@@ -4,6 +4,15 @@ const firebaseTokenVerifier = require('firebase-token-verifier')
 const projectId = 'coshop-cs5356' 
 
 module.exports.collabrators = async (event) => {
+  // check first if its an OPTIONS request
+  if (event.httpMethod === 'OPTIONS') {
+  return {
+    statusCode: 200,
+    //include CORS headers
+    headers,
+    
+  }
+}
 
   if (event.path === '/collabrators' && event.httpMethod === "GET" ){
     
@@ -28,6 +37,8 @@ module.exports.collabrators = async (event) => {
 
     return {
       statusCode: 200,
+      //include CORS headers
+      headers,
       body: JSON.stringify(
         [{name: 'Dan', loc: 'NYC', total: '$50',menuItems: [{ name: 'fried chicken', quantity: 2 }]},
         {name: 'Amy', loc: 'Boston', total: '$10',menuItems: [{ name: 'veg', quantity: 1 }]}]

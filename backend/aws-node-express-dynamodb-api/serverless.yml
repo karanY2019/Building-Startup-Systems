@@ -33,9 +33,11 @@ functions:
       - http:
           path: /
           method: ANY
+          cors: true
       - http:
           path: /{proxy+}
           method: ANY
+          cors: true
 
   feedApi:
     handler: handler.feed
@@ -43,6 +45,7 @@ functions:
       - http:
           path: /feed
           method: GET
+          cors: true
           
   collabratorsApi:
     handler: handler.collabrators
@@ -50,6 +53,7 @@ functions:
       - http:
           path: /collabrators
           method: GET
+          cors: true
 
 
 

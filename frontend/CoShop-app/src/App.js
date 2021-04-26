@@ -23,10 +23,13 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+
+
 class Collabrators extends React.Component {
   state = {
     orders: null
   }
+  
 
   async componentDidMount() {
     
@@ -45,11 +48,12 @@ class Collabrators extends React.Component {
     this.setState({collabrators: collabrators})
     console.log(collabrators)
   }
+  
   render() {
     return ( 
     
     <div>
-
+    
     {console.log("PLEASE", this.state.collabrators)}
     <div className="title">My Collabrators </div>  
 
@@ -70,7 +74,7 @@ class Collabrators extends React.Component {
     </ul>
   </div>
     )  
-  }    
+  }  
 }
  
 
@@ -148,7 +152,12 @@ class SignInScreen extends React.Component {
         {/* <p> E-mail: {firebase.auth().currentUser.email}   </p> */}
 
         {/* <a onClick={() => firebase.auth().signOut()}>Sign-out</a> */}
-        <Collabrators />
+        {/* Fetch data from API */}
+      
+        {/* <button className="fetch-button" onClick={Collabrators }>Fetch Data</button> */}
+        
+      
+        <Collabrators /> 
         <Button variant="primary" block onClick={() => firebase.auth().signOut()}>Sign-out</Button> 
         </Container>
      </div>
