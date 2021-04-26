@@ -51,8 +51,10 @@ functions:
     handler: handler.collabrators
     events:
       - http:
-          path: /collabrators
-          method: GET
+          # path: /collabrators
+          # method: GET
+          path: /{proxy+}
+          method: ANY
           cors: true
 
 

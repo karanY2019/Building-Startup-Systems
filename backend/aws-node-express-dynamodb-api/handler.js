@@ -5,14 +5,14 @@ const projectId = 'coshop-cs5356'
 
 module.exports.collabrators = async (event) => {
   // check first if its an OPTIONS request
-  if (event.httpMethod === 'OPTIONS') {
+  /*if (event.httpMethod === 'OPTIONS') {
   return {
     statusCode: 200,
     //include CORS headers
     headers,
     
   }
-}
+}*/
 
   if (event.path === '/collabrators' && event.httpMethod === "GET" ){
     
@@ -60,6 +60,7 @@ module.exports.hello = async (event) => {
   if (event.path === '/feed' && event.httpMethod === "GET" ){
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(
         [{username: 'da335', message: 'building stuff is cool'}]
       )
@@ -86,6 +87,7 @@ module.exports.feed = async (event) => {
   if (event.path === '/feed' && event.httpMethod === "GET" ){
     return {
       statusCode: 200,
+      headers,
       body: JSON.stringify(
         [{username: 'cl2634', message: 'building stuff is cool'}]
       )
