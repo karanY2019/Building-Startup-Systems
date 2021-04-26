@@ -35,7 +35,10 @@ class Collabrators extends React.Component {
     
     const idToken = await firebase.auth().currentUser?.getIdToken()  
     //this.setState({data: idToken})
-    const response = await fetch('http://localhost:4000/dev/collabrators', {
+    const backend='https://0885t1ok71.execute-api.us-east-1.amazonaws.com/dev/collabrators'
+    const local= 'http://localhost:4000/dev/collabrators'
+
+    const response = await fetch(backend, {
       headers: {
         'Authorization': idToken
       }
