@@ -10,96 +10,6 @@ import Navigation from './Component/Navigation';
 import { Router } from 'react-router-dom';
 import history from './Services/history';
 
-// class SignedInComponent extends React.Component {
-//   state = {
-// 		chatrooms: [],
-// 		newChatroomName: null
-// 	}
-
-// 	async fetchChatrooms() {
-// 		const token = await firebase.auth().currentUser?.getIdToken()
-// 		try {
-//      const response  = await fetch('http://localhost:4000/dev/feed', {
-// 			headers: {
-// 				'Authorization': token
-// 			},
-// 		});
-//     if (response.status === 401) {
-//        console.log('unauthorized')
-//     } else {
-//       const data = await response.json();
-//       this.setState({ data })
-//       // this.setState({ chatrooms: results.Items })
-//     }
-//   } catch (err) {
-//     console.error(err);
-//   }
-		
-// 	} 
-
-// 	componentDidMount() {
-// 		this.fetchChatrooms();
-// 	}
-
-// 	onNewChatroomNameUpdated(event) {
-// 		this.setState({newChatroomName: event.target.value})
-// 	}
-
-// 	async createNewChatroom() {
-// 		const token = await firebase.auth().currentUser?.getIdToken()
-
-// 		// Make a POST request to your new API
-// 		const response = await fetch('http://localhost:4000/dev/feedUpload', {
-// 			method: 'POST',
-// 			headers: {
-// 				'Authorization': token
-// 			},
-
-// 			// Include the data you want to save in the body of the request
-// 			// as a JSON string
-// 			body: JSON.stringify({
-// 				chatId: this.state.newChatroomName
-// 			})
-// 		})
-
-// 		// After the request is made, get all the users chatrooms again
-// 		// which will now include the newest one
-// 		this.fetchChatrooms()
-// 	}
-
-// 	render() {
-// 			return (
-// 				<div>
-// 					<div class="title">My Chatrooms</div>
-// 					<ul>
-	
-//              {/* {this.state.chatrooms && this.state.chatrooms.map(chatroom => { */}
-// 							{/* return <li>Chat ID: {chatroom.chatId}</li> */}
-//             {this.state.data && this.state.data.Items.map((item,index) => {
-// 						 	return (
-//                <li key={index}>
-//                  <div>
-//                 <p class = "title is-4">collabrators Name: {item.chatId}</p>
-//                 <p class = "subtitle is-6">collabrators location: {item.chatId}</p>
-//               </div>
-                 
-//               </li>)
-// 						}
-//             )}
-// 					</ul>
-// 					<div>
-// 						<div class="title">Create a Chat Room</div>
-
-// 						{/* Use an input field with an onChange handler */}
-// 						<input type="text" onChange={(event) => this.onNewChatroomNameUpdated(event)}></input>
-
-// 						{/* Use a button with an onClick handler to create */}
-// 						<button onClick={() => this.createNewChatroom()}>Create</button>
-// 					</div>
-// 				</div>
-// 			)
-// 	}
-// }
 
 var firebaseConfig = {
   apiKey: "AIzaSyANXg6kpBF53hSn-2smRbxdXT-JXztdN6s",
@@ -113,12 +23,101 @@ var firebaseConfig = {
 
 firebase.initializeApp(firebaseConfig);
 
+class SignedInComponent extends React.Component {
+  state = {
+		chatrooms: [],
+		newChatroomName: null
+	}
+
+	async fetchChatrooms() {
+		const token = await firebase.auth().currentUser?.getIdToken()
+		try {
+     const response  = await fetch('https://0885t1ok71.execute-api.us-east-1.amazonaws.com/dev/feed', {
+			headers: {
+				'Authorization': token
+			},
+		});
+    if (response.status === 401) {
+       console.log('unauthorized')
+    } else {
+      const data = await response.json();
+      this.setState({ data })
+      // this.setState({ chatrooms: results.Items })
+    }
+  } catch (err) {
+    console.error(err);
+  }
+		
+	} 
+
+	componentDidMount() {
+		this.fetchChatrooms();
+	}
+
+	onNewChatroomNameUpdated(event) {
+		this.setState({newChatroomName: event.target.value})
+	}
+
+	async createNewChatroom() {
+		const token = await firebase.auth().currentUser?.getIdToken()
+
+		// Make a POST request to your new API
+		const response = await fetch('http://localhost:4000/dev/feedUpload', {
+			method: 'POST',
+			headers: {
+				'Authorization': token
+			},
+
+			// Include the data you want to save in the body of the request
+			// as a JSON string
+			body: JSON.stringify({
+				chatId: this.state.newChatroomName
+			})
+		})
+
+		// After the request is made, get all the users chatrooms again
+		// which will now include the newest one
+		this.fetchChatrooms()
+	}
+
+	render() {
+			return (
+				<div>
+					<div className="title">My Feed</div>
+					<ul>
+	
+             {/* {this.state.chatrooms && this.state.chatrooms.map(chatroom => { */}
+							{/* return <li>Chat ID: {chatroom.chatId}</li> */}
+            {this.state.data && this.state.data.Items.map((item,index) => {
+						 	return (
+               <li key={index}>
+                 
+                 {item.chatId} from {item.chatId}
+               </li>  
+              )
+						})}
+					</ul>
+					<div>
+						<div className="title">Create a Chat Room</div>
+
+						{/* Use an input field with an onChange handler */}
+						<input type="text" onChange={(event) => this.onNewChatroomNameUpdated(event)}></input>
+
+						{/* Use a button with an onClick handler to create */}
+						<button onClick={() => this.createNewChatroom()}>Create</button>
+					</div>
+				</div>
+			)
+	}
+}
+
+
+
 class Collabrators extends React.Component {
   state = {
     orders: null
   }
   
-
   async componentDidMount() {
     
     const idToken = await firebase.auth().currentUser?.getIdToken()  
@@ -126,7 +125,7 @@ class Collabrators extends React.Component {
     const backend='https://0885t1ok71.execute-api.us-east-1.amazonaws.com/dev/collabrators'
     const local= 'http://localhost:4000/dev/collabrators'
 
-    const response = await fetch(local, {
+    const response = await fetch(backend, {
       headers: {
         'Authorization': idToken
       }
@@ -142,16 +141,12 @@ class Collabrators extends React.Component {
   
   render() {
     return ( 
-    
     <div>
-    
     {console.log("PLEASE", this.state.collabrators)}
     <div className="title">My Collabrators </div>  
-
       <ul>      
       {        
         this.state.collabrators && this.state.collabrators.map((collabrators,index) =>  {
-          
           return (
             <li key={index}>
               <div>
@@ -246,7 +241,7 @@ class SignInScreen extends React.Component {
       
         {/* <button className="fetch-button" onClick={Collabrators }>Fetch Data</button> */}
         
-      
+        <SignedInComponent /> 
         <Collabrators /> 
         <Button variant="primary" block onClick={() => firebase.auth().signOut()}>Sign-out</Button> 
         </Container>
