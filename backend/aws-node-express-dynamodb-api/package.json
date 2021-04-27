@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "dependencies": {
+    "aws-sdk": "^2.893.0",
     "express": "^4.17.1",
     "firebase-token-verifier": "^0.1.0",
     "serverless-http": "^2.7.0"
