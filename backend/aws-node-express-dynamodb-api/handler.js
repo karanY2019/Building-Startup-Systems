@@ -5,7 +5,7 @@ const projectId = 'coshop-cs5356'
 
 // Create DynamoDB document client
 const AWS = require('aws-sdk')
-const docClient = new AWS.DynamoDB.DocumentClient();
+const docClient = new AWS.DynamoDB.DocumentClient({region: "us-east-2"});
 
 const checkUser = async (event) => {
   const token = event.headers['Authorization']
@@ -22,8 +22,7 @@ module.exports.collabrators = async (event) => {
   return {
     statusCode: 200,
     //include CORS headers
-    headers,
-    
+    headers,    
   }
 }
 
@@ -80,8 +79,9 @@ module.exports.feed = async (event) => {
     }
 
   if (event.path === '/feed' && event.httpMethod === "GET" ){
+    //const token = event.headers['Authorization']
     const items = await docClient.scan({
-       TableName: "cs5356-chatrooms",
+       TableName: "cs5356-social-media-feed",
        Limit: 10,
     }).promise()
     return {
@@ -90,6 +90,8 @@ module.exports.feed = async (event) => {
       body: JSON.stringify(items)
     }
   }
+
+
 
   if (event.path === '/whoami' && event.httpMethod === "GET" ){
     return {
@@ -100,20 +102,19 @@ module.exports.feed = async (event) => {
     }
   }
   
-  return {
-    statusCode: 200,
-    body: JSON.stringify(
-      {
-        message: 'Go Serverless v1.0! Your function executed successfully!',
-        input: event,
-      },
-      null,
-      2
-    ),
-  };
+  // return {
+  //   statusCode: 200,
+  //   body: JSON.stringify(
+  //     {
+  //       message: 'Go Serverless v1.0! Your function executed successfully!',
+  //       input: event,
+  //     },
+  //     null,
+  //     2
+  //   ),
+  // };
 
-  // Use this code if you don't use the http event with the LAMBDA-PROXY integration
-  // return { message: 'Go Serverless v1.0! Your function executed successfully!', event };
+  
 };
 }
 

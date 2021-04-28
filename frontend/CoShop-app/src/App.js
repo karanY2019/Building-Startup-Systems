@@ -25,17 +25,17 @@ firebase.initializeApp(firebaseConfig);
 
 class SignedInComponent extends React.Component {
   state = {
-		chatrooms: [],
-		newChatroomName: null
+		data: null,
+		newPostMessage: null
 	}
 
-	async fetchChatrooms() {
+	async refreshFeed() {
 		const token = await firebase.auth().currentUser?.getIdToken()
 		try {
-     const response  = await fetch('https://0885t1ok71.execute-api.us-east-1.amazonaws.com/dev/feed', {
-			headers: {
-				'Authorization': token
-			},
+     const response  = await fetch('http://localhost:4000/dev/feed', {
+			 headers: {
+			 	'Authorization': token
+			 },
 		});
     if (response.status === 401) {
        console.log('unauthorized')
@@ -51,34 +51,38 @@ class SignedInComponent extends React.Component {
 	} 
 
 	componentDidMount() {
-		this.fetchChatrooms();
+		this.refreshFeed();
 	}
 
-	onNewChatroomNameUpdated(event) {
-		this.setState({newChatroomName: event.target.value})
-	}
+	// onNewChatroomNameUpdated(event) {
+	// 	this.setState({newChatroomName: event.target.value})
+	// }
 
-	async createNewChatroom() {
+	async submit() {
 		const token = await firebase.auth().currentUser?.getIdToken()
 
 		// Make a POST request to your new API
+    try {
 		const response = await fetch('http://localhost:4000/dev/feedUpload', {
 			method: 'POST',
 			headers: {
 				'Authorization': token
 			},
-
-			// Include the data you want to save in the body of the request
-			// as a JSON string
 			body: JSON.stringify({
-				chatId: this.state.newChatroomName
+				message: this.state.newPostMessage
 			})
-		})
+		});
+    if (response.status === 401) {
+      console.log('unauthorized')
+   } else {
+     this.refreshFeed();
+     // this.setState({ chatrooms: results.Items })
+   }
+  }catch (err) {
+   console.error(err);
+ }
+}
 
-		// After the request is made, get all the users chatrooms again
-		// which will now include the newest one
-		this.fetchChatrooms()
-	}
 
 	render() {
 			return (
@@ -92,25 +96,24 @@ class SignedInComponent extends React.Component {
 						 	return (
                <li key={index}>
                  
-                 {item.chatId} from {item.chatId}
+                 {item.postId} on {item.timestamp}
                </li>  
               )
 						})}
 					</ul>
 					<div>
-						<div className="title">Create a Chat Room</div>
+						<div className="title">Create a post</div>
 
 						{/* Use an input field with an onChange handler */}
-						<input type="text" onChange={(event) => this.onNewChatroomNameUpdated(event)}></input>
+						<input type="text" onChange={(event) => this.setState({newPostMessage: event.target.value})}></input>
 
 						{/* Use a button with an onClick handler to create */}
-						<button onClick={() => this.createNewChatroom()}>Create</button>
+						<button onClick={() => this.submit()}>Create</button>
 					</div>
 				</div>
 			)
 	}
 }
-
 
 
 class Collabrators extends React.Component {
@@ -247,7 +250,6 @@ class SignInScreen extends React.Component {
         </Container>
      </div>
   
-
       </div>
     );
   }

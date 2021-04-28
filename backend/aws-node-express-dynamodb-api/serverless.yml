@@ -22,7 +22,7 @@ provider:
               - dynamodb:UpdateItem
               - dynamodb:DeleteItem
           Resource:
-              - 'arn:aws:dynamodb:us-east-1:028537725317:table/cs5356-chatrooms'
+              - 'arn:aws:dynamodb:us-east-2:028537725317:table/cs5356-social-media-feed'
 
 functions:
   hello:
@@ -57,21 +57,21 @@ functions:
 
 
 
-resources:
-  Resources:
-    UsersTable:
-      Type: AWS::DynamoDB::Table
-      Properties:
-        AttributeDefinitions:
-          - AttributeName: userId
-            AttributeType: S
-        KeySchema:
-          - AttributeName: userId
-            KeyType: HASH
-        ProvisionedThroughput:
-          ReadCapacityUnits: 1
-          WriteCapacityUnits: 1
-        TableName: ${self:custom.tableName}
+# resources:
+#   Resources:
+#     UsersTable:
+#       Type: AWS::DynamoDB::Table
+#       Properties:
+#         AttributeDefinitions:
+#           - AttributeName: chatId
+#             AttributeType: S
+#         KeySchema:
+#           - AttributeName: userKey
+#             KeyType: HASH
+#         ProvisionedThroughput:
+#           ReadCapacityUnits: 1
+#           WriteCapacityUnits: 1
+#         TableName: ${cs5356-chatrooms}
 plugins:
   - serverless-offline
 
