@@ -30,9 +30,11 @@ class SignedInComponent extends React.Component {
 	}
 
 	async refreshFeed() {
+    // https://anax3p9lfj.execute-api.us-east-2.amazonaws.com/dev/feed
+    // http://localhost:4000/dev/feed
 		const token = await firebase.auth().currentUser?.getIdToken()
 		try {
-       const response  = await fetch('http://localhost:4000/dev/feed', {
+       const response  = await fetch('https://anax3p9lfj.execute-api.us-east-2.amazonaws.com/dev/feed', {
 			 headers: {
 			 	'Authorization': token
 			 },
@@ -60,7 +62,7 @@ class SignedInComponent extends React.Component {
 
 	async submit() {
 		const token = await firebase.auth().currentUser?.getIdToken()
-
+   
 		// Make a POST request to your new API
     try {
 		const response = await fetch('http://localhost:4000/dev/feedUpload', {
@@ -125,10 +127,10 @@ class Collabrators extends React.Component {
     
     const idToken = await firebase.auth().currentUser?.getIdToken()  
     //this.setState({data: idToken})
-    const backend='https://0885t1ok71.execute-api.us-east-2.amazonaws.com/dev/collabrators'
+    const backend='https://anax3p9lfj.execute-api.us-east-2.amazonaws.com/dev/collabrators'
     const local= 'http://localhost:4000/dev/collabrators'
 
-    const response = await fetch(local, {
+    const response = await fetch(backend, {
       headers: {
         'Authorization': idToken
       }
