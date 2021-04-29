@@ -32,7 +32,7 @@ class SignedInComponent extends React.Component {
 	async refreshFeed() {
 		const token = await firebase.auth().currentUser?.getIdToken()
 		try {
-     const response  = await fetch('http://localhost:4000/dev/feed', {
+       const response  = await fetch('http://localhost:4000/dev/feed', {
 			 headers: {
 			 	'Authorization': token
 			 },
@@ -40,9 +40,9 @@ class SignedInComponent extends React.Component {
     if (response.status === 401) {
        console.log('unauthorized')
     } else {
-      const data = await response.json();
+      const data = await response.json()
       this.setState({ data })
-      // this.setState({ chatrooms: results.Items })
+      
     }
   } catch (err) {
     console.error(err);
@@ -125,10 +125,10 @@ class Collabrators extends React.Component {
     
     const idToken = await firebase.auth().currentUser?.getIdToken()  
     //this.setState({data: idToken})
-    const backend='https://0885t1ok71.execute-api.us-east-1.amazonaws.com/dev/collabrators'
+    const backend='https://0885t1ok71.execute-api.us-east-2.amazonaws.com/dev/collabrators'
     const local= 'http://localhost:4000/dev/collabrators'
 
-    const response = await fetch(backend, {
+    const response = await fetch(local, {
       headers: {
         'Authorization': idToken
       }
