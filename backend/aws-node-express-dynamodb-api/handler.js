@@ -60,6 +60,7 @@ module.exports.collabrators = async (event) => {
 }
 
 module.exports.feed = async (event) => {
+  const headers = { 'Access-Control-Allow-Origin': 'https://www.uscoshop.com' }
   if (event.httpMethod === 'OPTIONS') {
     return {
       statusCode: 200,
@@ -79,7 +80,7 @@ module.exports.feed = async (event) => {
     }
 
   if (event.path === '/feed' && event.httpMethod === "GET" ){
-    //const token = event.headers['Authorization']
+    const token = event.headers['Authorization']
     const items = await docClient.scan({
        TableName: "cs5356-social-media-feed",
        Limit: 10,

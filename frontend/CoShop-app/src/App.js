@@ -1,281 +1,152 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
-import './App.css';
-import {Button, Alert, Breadcrumb, Card, Container, Form, Row, Col} from 'react-bootstrap'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import StyledFirebaseAuth from 'react-firebaseui/StyledFirebaseAuth';
-import firebase from 'firebase';
+import "tailwindcss/dist/base.css";
+import "styles/globalStyles.css";
+import React from "react";
+import { css } from "styled-components/macro"; //eslint-disable-line
 
-import Navigation from './Component/Navigation';
-import { Router } from 'react-router-dom';
-import history from './Services/history';
+/*
+ * This is the entry point component of this project. You can change the below exported default App component to any of
+ * the prebuilt landing page components by uncommenting their import and export lines respectively.
+ * See one of the landing page components to better understand how to import and render different components (Always
+ * make sure if you are building your own page, the root component should be the AnimationRevealPage component. You can
+ * disable the animation by using the disabled prop.
+ *
+ * The App component below is using React router to render the landing page that you see on the live demo website
+ * and the component previews.
+ *
+ */
 
+/* Use AnimationRevealPage as a wrapper component for your pages if you are building a custom one yourself */
+// import AnimationRevealPage from "helpers/AnimationRevealPage.js";
 
-var firebaseConfig = {
-  apiKey: "AIzaSyANXg6kpBF53hSn-2smRbxdXT-JXztdN6s",
-  authDomain: "coshop-cs5356.firebaseapp.com",
-  projectId: "coshop-cs5356",
-  storageBucket: "coshop-cs5356.appspot.com",
-  messagingSenderId: "852483800520",
-  appId: "1:852483800520:web:5aaed6423d886d21e814fd",
-  measurementId: "G-8DPCYD26VD"
-};
+/*
+ * Hero section is the top most section on the page. It contains the header as well.
+ * So you dont need to import headers
+ * separately
+ */
 
-firebase.initializeApp(firebaseConfig);
+// import Hero from "components/hero/TwoColumnWithVideo.js";
+// import Hero from "components/hero/TwoColumnWithInput.js";
+// import Hero from "components/hero/TwoColumnWithFeaturesAndTestimonial.js";
+// import Hero from "components/hero/TwoColumnWithPrimaryBackground.js";
+// import Hero from "components/hero/FullWidthWithImage.js";
+// import Hero from "components/hero/BackgroundAsImage.js";
+// import Hero from "components/hero/BackgroundAsImageWithCenteredContent.js";
 
-class SignedInComponent extends React.Component {
-  state = {
-		data: null,
-		newPostMessage: null
-	}
+// import Features from "components/features/ThreeColSimple.js";
+// import Features from "components/features/ThreeColWithSideImage.js";
+// import Features from "components/features/ThreeColWithSideImageWithPrimaryBackground.js";
+// import Features from "components/features/VerticalWithAlternateImageAndText.js";
+// import Features from "components/features/DashedBorderSixFeatures";
+// import MainFeature from "components/features/TwoColWithButton.js";
+// import MainFeature from "components/features/TwoColSingleFeatureWithStats.js";
+// import MainFeature2 from "components/features/TwoColSingleFeatureWithStats2.js";
+// import MainFeature from "components/features/TwoColWithTwoHorizontalFeaturesAndButton.js";
+// import FeatureWithSteps from "components/features/TwoColWithSteps.js";
+// import FeatureStats from "components/features/ThreeColCenteredStatsPrimaryBackground.js";
 
-	async refreshFeed() {
-    // https://anax3p9lfj.execute-api.us-east-2.amazonaws.com/dev/feed
-    // http://localhost:4000/dev/feed
-		const token = await firebase.auth().currentUser?.getIdToken()
-		try {
-       const response  = await fetch('https://anax3p9lfj.execute-api.us-east-2.amazonaws.com/dev/feed', {
-			 headers: {
-			 	'Authorization': token
-			 },
-		});
-    if (response.status === 401) {
-       console.log('unauthorized')
-    } else {
-      const data = await response.json()
-      this.setState({ data })
-      
-    }
-  } catch (err) {
-    console.error(err);
-  }
-		
-	} 
+// import Pricing from "components/pricing/ThreePlans.js";
+// import Pricing from "components/pricing/ThreePlansWithHalfPrimaryBackground.js";
+// import Pricing from "components/pricing/TwoPlansWithDurationSwitcher.js";
 
-	componentDidMount() {
-		this.refreshFeed();
-	}
+// import SliderCard from "components/cards/ThreeColSlider.js";
+// import TrendingCard from "components/cards/TwoTrendingPreviewCardsWithImage.js";
+// import Portfolio from "components/cards/PortfolioTwoCardsWithImage.js";
+// import TabGrid from "components/cards/TabCardGrid.js";
 
-	// onNewChatroomNameUpdated(event) {
-	// 	this.setState({newChatroomName: event.target.value})
-	// }
+// import Blog from "components/blogs/ThreeColSimpleWithImage.js";
+// import Blog from "components/blogs/ThreeColSimpleWithImageAndDashedBorder.js";
+// import Blog from "components/blogs/PopularAndRecentBlogPosts.js";
+// import Blog from "components/blogs/GridWithFeaturedPost.js";
 
-	async submit() {
-		const token = await firebase.auth().currentUser?.getIdToken()
-   
-		// Make a POST request to your new API
-    try {
-		const response = await fetch('http://localhost:4000/dev/feedUpload', {
-			method: 'POST',
-			headers: {
-				'Authorization': token
-			},
-			body: JSON.stringify({
-				message: this.state.newPostMessage
-			})
-		});
-    if (response.status === 401) {
-      console.log('unauthorized')
-   } else {
-     this.refreshFeed();
-     // this.setState({ chatrooms: results.Items })
-   }
-  }catch (err) {
-   console.error(err);
- }
-}
+// import Testimonial from "components/testimonials/TwoColumnWithImage.js";
+// import Testimonial from "components/testimonials/TwoColumnWithImageAndProfilePictureReview.js";
+// import Testimonial from "components/testimonials/TwoColumnWithImageAndRating.js";
+// import Testimonial from "components/testimonials/ThreeColumnWithProfileImage.js";
+// import Testimonial from "components/testimonials/SimplePrimaryBackground.js";
 
+// import FAQ from "components/faqs/SimpleWithSideImage.js";
+// import FAQ from "components/faqs/SingleCol.js";
+// import FAQ from "components/faqs/TwoColumnPrimaryBackground.js";
 
-	render() {
-			return (
-				<div>
-					<div className="title">My Feed</div>
-					<ul>
-	
-             {/* {this.state.chatrooms && this.state.chatrooms.map(chatroom => { */}
-							{/* return <li>Chat ID: {chatroom.chatId}</li> */}
-            {this.state.data && this.state.data.Items.map((item,index) => {
-						 	return (
-               <li key={index}>
-                 
-                 {item.postId} on {item.timestamp}
-               </li>  
-              )
-						})}
-					</ul>
-					<div>
-						<div className="title">Create a post</div>
+// import ContactUsForm from "components/forms/SimpleContactUs.js";
+// import ContactUsForm from "components/forms/TwoColContactUsWithIllustration.js";
+// import SubscribeNewsLetterForm from "components/forms/SimpleSubscribeNewsletter.js";
+//
+// import GetStarted from "components/cta/GetStarted.js";
+// import GetStarted from "components/cta/GetStartedLight.js";
+// import DownloadApp from "components/cta/DownloadApp.js";
 
-						{/* Use an input field with an onChange handler */}
-						<input type="text" onChange={(event) => this.setState({newPostMessage: event.target.value})}></input>
+// import Footer from "components/footers/SimpleFiveColumn.js";
+// import Footer from "components/footers/FiveColumnWithInputForm.js";
+// import Footer from "components/footers/FiveColumnWithBackground.js";
+// import Footer from "components/footers/FiveColumnDark.js";
+// import Footer from "components/footers/MiniCenteredFooter.js";
 
-						{/* Use a button with an onClick handler to create */}
-						<button onClick={() => this.submit()}>Create</button>
-					</div>
-				</div>
-			)
-	}
-}
+/* Ready Made Pages (from demos folder) */
+// import EventLandingPage from "demos/EventLandingPage.js";
+// import HotelTravelLandingPage from "demos/HotelTravelLandingPage.js";
+// import AgencyLandingPage from "demos/AgencyLandingPage.js";
+// import SaaSProductLandingPage from "demos/SaaSProductLandingPage.js";
+// import RestaurantLandingPage from "demos/RestaurantLandingPage.js";
+// import ServiceLandingPage from "demos/ServiceLandingPage.js";
+// import HostingCloudLandingPage from "demos/HostingCloudLandingPage.js";
+
+/* Inner Pages */
+// import LoginPage from "pages/Login.js";
+// import SignupPage from "pages/Signup.js";
+// import PricingPage from "pages/Pricing.js";
+// import AboutUsPage from "pages/AboutUs.js";
+// import ContactUsPage from "pages/ContactUs.js";
+// import BlogIndexPage from "pages/BlogIndex.js";
+// import TermsOfServicePage from "pages/TermsOfService.js";
+// import PrivacyPolicyPage from "pages/PrivacyPolicy.js";
+
+import ComponentRenderer from "ComponentRenderer.js";
+import MainLandingPage from "MainLandingPage.js";
+import ThankYouPage from "ThankYouPage.js";
+
+import { BrowserRouter as Router, Switch, Route } from "react-router-dom";
+
+export default function App() {
+  // If you want to disable the animation just use the disabled `prop` like below on your page's component
+  // return <AnimationRevealPage disabled>xxxxxxxxxx</AnimationRevealPage>;
 
 
-class Collabrators extends React.Component {
-  state = {
-    orders: null
-  }
-  
-  async componentDidMount() {
-    
-    const idToken = await firebase.auth().currentUser?.getIdToken()  
-    //this.setState({data: idToken})
-    const backend='https://anax3p9lfj.execute-api.us-east-2.amazonaws.com/dev/collabrators'
-    const local= 'http://localhost:4000/dev/collabrators'
-
-    const response = await fetch(backend, {
-      headers: {
-        'Authorization': idToken
-      }
-    })
-    if (response.status === 401) {
-      return console.log('unauthorized')
-    }
-    const collabrators = await response.json()
-    // save it to your components state so you can use it during render
-    this.setState({collabrators: collabrators})
-    console.log(collabrators)
-  }
-  
-  render() {
-    return ( 
-    <div>
-    {console.log("PLEASE", this.state.collabrators)}
-    <div className="title">My Collabrators </div>  
-      <ul>      
-      {        
-        this.state.collabrators && this.state.collabrators.map((collabrators,index) =>  {
-          return (
-            <li key={index}>
-              <div>
-                <p class = "title is-4">collabrators Name: {collabrators.name}</p>
-                <p class = "subtitle is-6">collabrators location: {collabrators.loc}</p>
-              </div>
-            </li>
-          )
-        })       
-      }      
-    </ul>
-  </div>
-    )  
-  }  
-}
- 
-class SignInScreen extends React.Component {
- 
-  // The component's Local state.
-  state = {
-    isSignedIn: false // Local signed-in state.
-  };
-  
-  // Configure FirebaseUI.
-  uiConfig = {
-    // Popup signin flow rather than redirect flow.
-    signInFlow: 'popup',
-    // We will display Google and Facebook as auth providers.
-    signInOptions: [
-      firebase.auth.EmailAuthProvider.PROVIDER_ID
-    ],
-    callbacks: {
-      // Avoid redirects after sign-in.
-      signInSuccessWithAuthResult: () => false
-    }
-  };
-
-  // Listen to the Firebase Auth state and set the local state.
-  componentDidMount() {
-    
-    this.unregisterAuthObserver = firebase.auth().onAuthStateChanged(
-       (user) => this.setState({isSignedIn: !!user})
-    );
-   
-  }
-
-  // Make sure we un-register Firebase observers when the component unmounts.
-  componentWillUnmount() {
-    this.unregisterAuthObserver();
-  }
-
-  render() {
-    if (!this.state.isSignedIn) {
-      return (
-        <div>
-          <h1>CoShop</h1>
-          <p>Please sign-in:</p>
-          <StyledFirebaseAuth uiConfig={this.uiConfig} firebaseAuth={firebase.auth()}/>
-        </div>
-      );
-    }
-    return (
-      <div>
-        <h1>CoShop</h1>
-        <div class="align-login-item-centre">
-        <Card className="mb-3" style={{color: "#000", width: '30rem'}}>
-          <Card.Img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSK4aQGQczM3a39lujDohb4FjYXLKTexZU1MQ&usqp=CAU/160/50"/>
-          <Card.Body>
-            {/* <Card.Title> 
-              CoShop
-            </Card.Title>*/}
-            <Card.Text>
-            Collaborative Shopping
-            </Card.Text>
-          </Card.Body>
-        </Card>
-
-        <Breadcrumb>
-          <Breadcrumb.Item>About</Breadcrumb.Item>
-          <Breadcrumb.Item>Stores</Breadcrumb.Item>
-          <Breadcrumb.Item>Location</Breadcrumb.Item>
-          <Breadcrumb.Item active>Test</Breadcrumb.Item>
-        </Breadcrumb>
-        <Container>
-        <p>Welcome ! You are now signed-in!</p>
-
-        {/* <p>Welcome {firebase.auth().currentUser.displayName}! You are now signed-in!</p> */}
-        {/* <p> E-mail: {firebase.auth().currentUser.email}   </p> */}
-
-        {/* <a onClick={() => firebase.auth().signOut()}>Sign-out</a> */}
-        {/* Fetch data from API */}
-      
-        {/* <button className="fetch-button" onClick={Collabrators }>Fetch Data</button> */}
-        
-        <SignedInComponent /> 
-        <Collabrators /> 
-        <Button variant="primary" block onClick={() => firebase.auth().signOut()}>Sign-out</Button> 
-        </Container>
-     </div>
-  
-      </div>
-    );
-  }
-}
-
-function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        {/* <img src={logo} className="App-logo" alt="logo" /> */}
-        <SignInScreen />
-      </header>
-    </div>
+    <Router>
+      <Switch>
+        <Route path="/components/:type/:subtype/:name">
+          <ComponentRenderer />
+        </Route>
+        <Route path="/components/:type/:name">
+          <ComponentRenderer />
+        </Route>
+        <Route path="/thank-you">
+          <ThankYouPage />
+        </Route>
+        <Route path="/">
+          <MainLandingPage />
+        </Route>
+      </Switch>
+    </Router>
   );
 }
 
-export default App;
+// export default EventLandingPage;
+// export default HotelTravelLandingPage;
+// export default AgencyLandingPage;
+// export default SaaSProductLandingPage;
+// export default RestaurantLandingPage;
+// export default ServiceLandingPage;
+// export default HostingCloudLandingPage;
 
-/*function App() {
-  return (
-  <Router history={history}>
-  <Navigation />
-  </Router>
-  );
-  }*/
+// export default LoginPage;
+// export default SignupPage;
+// export default PricingPage;
+// export default AboutUsPage;
+// export default ContactUsPage;
+// export default BlogIndexPage;
+// export default TermsOfServicePage;
+// export default PrivacyPolicyPage;
 
-
+// export default MainLandingPage;
