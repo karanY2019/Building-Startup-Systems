@@ -24,16 +24,23 @@ export default () => {
   return (
     <AnimationRevealPage>
       <Hero
-        heading={<>Delicious & Affordable <HighlightedText>Meals Near You.</HighlightedText></>}
+        heading={
+          <>
+           CoShop
+            <wbr /> <HighlightedText>Collaborative & Affordable</HighlightedText>
+          </>
+        }
+        // heading={<> <HighlightedText>CoShop.</HighlightedText></>}
+        // subheading={<Subheading>Collaborative & Affordable </Subheading>}
         description="Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua."
         imageSrc="https://images.unsplash.com/photo-1504674900247-0877df9cc836?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=768&q=80"
         imageCss={imageCss}
         imageDecoratorBlob={true}
-        primaryButtonText="Order Now"
+        primaryButtonText="Order and Invite Now"
         watchVideoButtonText="Meet The Chefs"
       />
       <MainFeature
-        subheading={<Subheading>Established Since 2014</Subheading>}
+        subheading={<Subheading>Established Since 2021</Subheading>}
         heading={
           <>
             We've been serving for
